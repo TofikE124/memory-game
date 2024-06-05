@@ -6,7 +6,7 @@
   }
 }
 @mixin medium-screen {
-  @media only screen and (min-width: $MEDIUM-SCREEN) {
+  @media only screen and (min-width: $MEDIUM-SCREEN) and (max-width: $LARGE-SCREEN) {
     @content;
   }
 }

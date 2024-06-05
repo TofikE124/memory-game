@@ -2,7 +2,7 @@
 @use "../base/typography" as *;
 
 .menu-button-big {
-  padding: 1rem 11.5rem;
+  padding: 1rem 3rem;
   border-radius: 35px;
   color: $WHITE;
   background-color: $LIGHT_SALMON;
@@ -10,6 +10,7 @@
   border: 0;
   cursor: pointer;
   @extend .h2;
+  width: 100%;
 
   &:hover {
     background-color: #ffb84a;

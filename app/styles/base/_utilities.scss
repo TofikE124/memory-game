@@ -1,0 +1,9 @@
+@use "../abstracts/variables" as *;
+
+.bg-white {
+  background-color: $WHITE;
+}
+
+.bg-dark-navy {
+  background-color: $DARK_NAVY;
+}
