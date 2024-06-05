@@ -1,0 +1,19 @@
+@use "../abstracts/variables" as *;
+@use "../base/typography" as *;
+
+.button-primary {
+  background-color: $LIGHT_SALMON;
+  border: 0;
+  border-radius: 26px;
+  color: $WHITE;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  width: fit-content;
+  @extend .h3;
+
+  transition: background-color 300ms ease-out;
+
+  &:hover {
+    background-color: #ffb84a;
+  }
+}

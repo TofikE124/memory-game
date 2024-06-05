@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Atkinson_Hyperlegible, Inter } from "next/font/google";
+import "./main.scss";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Atkinson_Hyperlegible({ subsets: ["latin"], weight: ["700"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",

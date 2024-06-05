@@ -1,0 +1,20 @@
+@use "../abstracts/variables" as *;
+@use "../base/typography" as *;
+
+.button-secondary {
+  background-color: #dfe7ec;
+  border: 0;
+  border-radius: 26px;
+  color: $MIDNIGHT_BLUE;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  width: fit-content;
+  @extend .h3;
+
+  transition: background-color 300ms, color 200ms;
+
+  &:hover {
+    background-color: $ROYAL_BLUE;
+    color: $WHITE;
+  }
+}

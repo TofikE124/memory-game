@@ -1,0 +1,17 @@
+@use "../abstracts/variables" as *;
+@use "../base/typography" as *;
+
+.menu-button-big {
+  padding: 1rem 11.5rem;
+  border-radius: 35px;
+  color: $WHITE;
+  background-color: $LIGHT_SALMON;
+  transition: background-color 300ms;
+  border: 0;
+  cursor: pointer;
+  @extend .h2;
+
+  &:hover {
+    background-color: #ffb84a;
+  }
+}
