@@ -1,11 +1,15 @@
 "use effect";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { GameTheme, GridType } from "../constants/GameOptions";
+import { Grid, Player } from "../constants/GameOptions";
+import { GameTheme } from "../constants/MenuOptions";
 import { generateGrid } from "../utils/gridGenerator";
+import { generatePlayers } from "../utils/playersGenerator";
 
 interface GameContextType {
-  grid: GridType;
+  grid: Grid;
   gameNumberClicked: (i: number, j: number) => void;
+  players: Player[];
+  currentTurn: number;
 }
 
 export const GameContext = createContext<GameContextType>(
@@ -14,7 +18,7 @@ export const GameContext = createContext<GameContextType>(
 
 interface Props {
   theme: GameTheme;
-  playersNumber?: "1" | "2" | "3" | "4";
+  playersNumber: number;
   gridSize: "4" | "6";
   children: ReactNode;
 }
@@ -25,12 +29,21 @@ const GameContextProvider = ({
   playersNumber,
   children,
 }: Props) => {
-  const [grid, setGrid] = useState<GridType>([]);
+  const [grid, setGrid] = useState<Grid>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
   // Grid Intialization
   useEffect(() => {
     const generatedGrid = generateGrid(parseInt(gridSize), theme);
     setGrid(generatedGrid);
   }, [gridSize, theme]);
+
+  useEffect(() => {
+    const generatedPlayers = generatePlayers(playersNumber);
+    setPlayers(generatedPlayers);
+  }, [playersNumber]);
+
+  // Turn Intialization
+  const [currentTurn, setCurrentTurn] = useState(0);
 
   // Selection Initialization
   const [firstSelection, setFirstSelection] = useState<[number, number] | null>(
@@ -47,24 +60,13 @@ const GameContextProvider = ({
     const [row1, col1] = firstSelection;
     const [row2, col2] = secondSelection;
 
-    const HIDE_DELAY = 2000;
-
-    if (grid[row1][col1].value == grid[row2][col2].value) {
-      console.log("Congrats");
-      setFirstSelection(null);
-      setSecondSelection(null);
-    } else {
-      setTimeout(() => {
-        setFlipped(row1, col1, false);
-        setFlipped(row2, col2, false);
-        setFirstSelection(null);
-        setSecondSelection(null);
-      }, HIDE_DELAY);
-    }
+    if (grid[row1][col1].value == grid[row2][col2].value) handleRight();
+    else handleWrong();
   }, [secondSelection]);
 
   // Functions
   const gameNumberClicked = (i: number, j: number) => {
+    if (grid[i][j].flipped) return;
     if (!firstSelection) {
       setFirstSelection([i, j]);
       setFlipped(i, j, true);
@@ -81,8 +83,35 @@ const GameContextProvider = ({
     });
   };
 
+  const handleRight = () => {
+    setFirstSelection(null);
+    setSecondSelection(null);
+    increaseCurrentPlayerScore();
+  };
+
+  const handleWrong = () => {
+    if (!firstSelection || !secondSelection) return;
+    const HIDE_DELAY = 1500;
+    const [row1, col1] = firstSelection;
+    const [row2, col2] = secondSelection;
+    setTimeout(() => {
+      setFlipped(row1, col1, false);
+      setFlipped(row2, col2, false);
+      setFirstSelection(null);
+      setSecondSelection(null);
+      setCurrentTurn((prevTurn) => (prevTurn + 1) % playersNumber);
+    }, HIDE_DELAY);
+  };
+
+  const increaseCurrentPlayerScore = () => {
+    players[currentTurn].score++;
+    setPlayers(players);
+  };
+
   return (
-    <GameContext.Provider value={{ grid, gameNumberClicked }}>
+    <GameContext.Provider
+      value={{ grid, gameNumberClicked, players, currentTurn }}
+    >
       {children}
     </GameContext.Provider>
   );

@@ -1,16 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  GameProps,
-  GameTheme,
-  GridSize,
-  GridType,
-} from "../constants/GameOptions";
+import { Grid } from "../constants/GameOptions";
+import { GameProps, GameTheme, GridSize } from "../constants/MenuOptions";
 import GameHeader from "./GameHeader";
 import { generateGrid } from "../utils/gridGenerator";
-import GameNumber from "./GameNumber";
-import GameNumbersGrid from "./GameNumbersGrid";
+import GameCard from "./card/GameCard";
+import GameNumbersGrid from "./card/GameCardsGrid";
 import GameContextProvider from "./GameContextProvider";
+import GamePlayersPanel from "./player/GamePlayersPanel";
+import GamePlayer from "./player/GamePlayer";
 
 interface SearchParams {
   theme: GameTheme;
@@ -25,9 +23,14 @@ interface Props {
 const page = ({ searchParams: { gridSize, playersNumber, theme } }: Props) => {
   return (
     <div className="div-container pt-16">
-      <GameContextProvider gridSize={gridSize} theme={theme}>
+      <GameContextProvider
+        gridSize={gridSize}
+        theme={theme}
+        playersNumber={parseInt(playersNumber)}
+      >
         <GameHeader />
         <GameNumbersGrid theme={theme} gridSize={gridSize}></GameNumbersGrid>
+        <GamePlayersPanel></GamePlayersPanel>
       </GameContextProvider>
     </div>
   );

@@ -1,10 +1,8 @@
-import { GameTheme, GridSize, GridType } from "../constants/GameOptions";
+import { Grid } from "../constants/GameOptions";
+import { GameTheme, GridSize } from "../constants/MenuOptions";
 import { icons } from "../constants/icons";
 
-export const generateGrid = (
-  gridSize: GridSize,
-  theme: GameTheme
-): GridType => {
+export const generateGrid = (gridSize: GridSize, theme: GameTheme): Grid => {
   // Getting the avilable values depending on the theme
   const avilableValues =
     theme == GameTheme.ICONS ? icons : getNumbersArr((gridSize * gridSize) / 2);
@@ -13,7 +11,7 @@ export const generateGrid = (
   const avilableSlots = getAvilableSlotsArr(gridSize);
   shuffleArray(avilableSlots);
 
-  const grid: GridType = Array.from({ length: gridSize }, () =>
+  const grid: Grid = Array.from({ length: gridSize }, () =>
     Array(gridSize).fill(0)
   );
 

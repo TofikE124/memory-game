@@ -16,8 +16,10 @@ const config: Config = {
     },
     screens: {
       sm: { max: "40em" },
-      md: "40em",
+      md: { min: "40em", max: "55em" },
+      mdsm: { max: "55em" },
       lg: "55em",
+      lgmd: { min: "40em" },
     },
   },
   plugins: [],

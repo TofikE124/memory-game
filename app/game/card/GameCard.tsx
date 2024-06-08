@@ -1,7 +1,7 @@
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { GameTheme } from "../constants/GameOptions";
-import MemoryCardIcon from "../components/MemoryCardIcon";
+import { GameTheme } from "../../constants/MenuOptions";
+import MemoryCardIcon from "../../components/MemoryCardIcon";
 
 interface Props {
   value: number | IconDefinition;
@@ -11,7 +11,7 @@ interface Props {
   onClick?: () => void;
 }
 
-const GameNumber = ({
+const GameCard = ({
   onClick = () => {},
   value,
   visibility,
@@ -35,4 +35,4 @@ const GameNumber = ({
   );
 };
 
-export default GameNumber;
+export default GameCard;

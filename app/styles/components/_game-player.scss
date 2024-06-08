@@ -1,0 +1,53 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.game-player {
+  position: relative;
+  width: 200px;
+
+  @include medium-screen() {
+    width: 150px;
+  }
+  @include small-screen() {
+    width: 90px;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.5rem 1rem;
+  }
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.5rem 1.25rem;
+  border-radius: 10px;
+
+  background-color: #dfe7ec;
+
+  .player-label {
+    color: $SLATE_BLUE;
+  }
+  .player-score {
+    color: $MIDNIGHT_BLUE;
+  }
+
+  &.current {
+    background-color: $LIGHT_SALMON;
+
+    .player-label,
+    .player-score {
+      color: $WHITE;
+    }
+
+    ::before {
+      content: "";
+      position: absolute;
+      top: -19px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      border-left: 19px solid transparent;
+      border-right: 19px solid transparent;
+      border-bottom: 19px solid $LIGHT_SALMON;
+    }
+  }
+}

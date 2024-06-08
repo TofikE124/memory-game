@@ -3,7 +3,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import MenuSection, { MenuSectionOption } from "./MenuSection";
 import { useEffect } from "react";
 import Link from "next/link";
-import { menuSections } from "@/app/constants/GameOptions";
+import { menuSections } from "@/app/constants/MenuOptions";
 
 const Menu = () => {
   const pathname = usePathname();
