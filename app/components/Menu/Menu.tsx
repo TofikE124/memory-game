@@ -1,33 +1,11 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import MenuSection from "./MenuSection";
+import MenuSection, { MenuSectionOption } from "./MenuSection";
 import { useEffect } from "react";
-
-interface MenuSectionType {
-  options: (string | number)[];
-  queryParamName: string;
-  title: string;
-}
+import Link from "next/link";
+import { menuSections } from "@/app/constants/GameOptions";
 
 const Menu = () => {
-  const menuSections: MenuSectionType[] = [
-    {
-      title: "Select Theme",
-      options: ["Numbers", "Icons"],
-      queryParamName: "theme",
-    },
-    {
-      title: "Number of Players",
-      options: [1, 2, 3, 4],
-      queryParamName: "playersNumber",
-    },
-    {
-      title: "Grid Size",
-      options: ["4x4", "6x6"],
-      queryParamName: "gridSize",
-    },
-  ];
-
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -38,7 +16,7 @@ const Menu = () => {
       if (!params.get(menuSection.queryParamName))
         params.set(
           menuSection.queryParamName,
-          menuSection.options[0].toString()
+          menuSection.options[0].value.toString()
         );
     });
     router.push(`${pathname.toString()}?${params.toString()}`);
@@ -56,7 +34,12 @@ const Menu = () => {
           ></MenuSection>
         ))}
 
-        <button className="menu-button-big">Start Game</button>
+        <Link
+          className="menu-button-big text-center no-underline"
+          href={`/game?${searchParams.toString()}`}
+        >
+          Start Game
+        </Link>
       </div>
     </div>
   );

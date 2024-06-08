@@ -2,9 +2,14 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import MenuSelection from "./MenuSelection";
 
+export interface MenuSectionOption {
+  label: string;
+  value: string | number;
+}
+
 interface Props {
   title: string;
-  options: (string | number)[];
+  options: MenuSectionOption[];
   queryParamName: string;
 }
 
@@ -31,12 +36,12 @@ const MenuSection = ({ title, options, queryParamName }: Props) => {
         {options.map((option, index) => (
           <MenuSelection
             onClick={() => {
-              updateQueryParam(queryParamName, option.toString());
+              updateQueryParam(queryParamName, option.value.toString());
             }}
-            active={searchParams.get(queryParamName) == option}
+            active={searchParams.get(queryParamName) == option.value.toString()}
             key={index}
           >
-            {option}
+            {option.label}
           </MenuSelection>
         ))}
       </div>

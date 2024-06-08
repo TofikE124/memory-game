@@ -16,20 +16,12 @@ body {
   font-size: 1.125rem; //18px
 }
 
-.game-number_6x6 {
-  font-size: 2.75rem; //44px
-}
-
-.game-number_4x4 {
-  font-size: 3.5rem; //56px
-}
-
 .h1,
 .h2,
 .h3,
 body,
-.game-number_6x6,
-.game-number_4x4 {
+.game-number-6x6,
+.game-number-4x4 {
   font-weight: 700;
 }
 
@@ -43,4 +35,8 @@ body,
 
 .text-slate-blue {
   color: $SLATE_BLUE;
+}
+
+.text-dark-navy {
+  color: $DARK_NAVY;
 }
