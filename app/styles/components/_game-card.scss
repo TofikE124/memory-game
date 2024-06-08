@@ -5,7 +5,7 @@ body {
   perspective: 800px;
 }
 
-.game-number {
+.game-card {
   display: grid;
   place-items: center;
   aspect-ratio: 1;
@@ -15,20 +15,19 @@ body {
 
   transition: transform 250ms, background-color 250ms;
 
-  .game-number-content {
+  .game-card-content {
     transform: rotateY(180deg);
     opacity: 0;
   }
 
   &.flipped {
     background-color: $LIGHT_BLUE_GRAY;
-    transform: rotate3d(0, 0.5, 0, 180deg);
   }
 
   &.not-flipped {
     transition: background-color 0 2s;
     background-color: $MIDNIGHT_BLUE;
-    .game-number-content {
+    .game-card-content {
       opacity: 0;
     }
   }
@@ -37,20 +36,25 @@ body {
     background-color: $LIGHT_SALMON;
   }
 
+  &.flipped,
+  &.selected {
+    transform: rotate3d(0, 0.5, 0, 180deg);
+  }
+
   &.selected,
   &.flipped {
-    .game-number-content {
+    .game-card-content {
       opacity: 1;
     }
   }
 }
 
-.game-number-4x4 {
+.game-card-4x4 {
   width: 118px;
   font-size: 3.5rem; //56px
 }
 
-.game-number-6x6 {
+.game-card-6x6 {
   width: 82px;
   font-size: 2.75rem; //44px
 }

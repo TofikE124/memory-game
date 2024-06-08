@@ -21,10 +21,10 @@ const GameCard = ({
   return (
     <button
       onClick={onClick}
-      className={`game-number relative game-number-${type} ${visibility}`}
+      className={`game-card relative game-card-${type} ${visibility}`}
     >
       {visibility != "not-flipped" ? (
-        <div className={"game-number-content"}>
+        <div className={"game-card-content"}>
           {theme == GameTheme.NUMBERS ? (value as number) : null}
           {theme == GameTheme.ICONS ? (
             <MemoryCardIcon icon={value as IconDefinition} />

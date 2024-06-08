@@ -12,7 +12,7 @@ interface Props {
 }
 
 const GameNumbersGrid = ({ gridSize, theme }: Props) => {
-  const { grid, gameNumberClicked } = useContext(GameContext);
+  const { grid, gameNumberClicked, isSelected } = useContext(GameContext);
 
   return (
     <div className={`grid mx-auto grid-cols-4 w-fit gap-4 mt-[85px]`}>
@@ -23,7 +23,13 @@ const GameNumbersGrid = ({ gridSize, theme }: Props) => {
             value={value}
             type={gridSize == "4" ? "4x4" : "6x6"}
             theme={theme}
-            visibility={flipped ? "flipped" : "not-flipped"}
+            visibility={
+              isSelected(i, j)
+                ? "selected"
+                : flipped
+                ? "flipped"
+                : "not-flipped"
+            }
             key={i * j + j}
           ></GameCard>
         ))
