@@ -20,8 +20,14 @@ export const generateGrid = (gridSize: GridSize, theme: GameTheme): Grid => {
     const [row1, col1] = avilableSlots.pop()!;
     const [row2, col2] = avilableSlots.pop()!;
 
-    grid[row1][col1] = { value: randVal, flipped: false };
-    grid[row2][col2] = { value: randVal, flipped: false };
+    grid[row1][col1] = {
+      value: randVal,
+      flipped: i < (gridSize * gridSize) / 2 - 1 ? true : false,
+    };
+    grid[row2][col2] = {
+      value: randVal,
+      flipped: i < (gridSize * gridSize) / 2 - 1 ? true : false,
+    };
   }
   return grid;
 };

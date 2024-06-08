@@ -6,7 +6,7 @@ const GameHeader = () => {
       <h2 className="text-[40px] text-dark-navy font-bold">Memory</h2>
       <div className="flex items-center gap-4">
         <button className="button-primary">Restart</button>
-        <button className="button-secondary">Restart</button>
+        <button className="button-secondary">New Game</button>
       </div>
     </div>
   );

@@ -1,0 +1,30 @@
+@use "../abstracts/variables" as *;
+
+.player-result {
+  width: 100%;
+  border-radius: 10px;
+  background-color: #dfe7ec;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1rem 2rem;
+
+  .player-label {
+    color: $SLATE_BLUE;
+  }
+
+  .player-score {
+    color: $MIDNIGHT_BLUE;
+  }
+
+  &.winner {
+    background-color: $DARK_NAVY;
+
+    .player-label,
+    .player-score {
+      color: $WHITE;
+    }
+  }
+}

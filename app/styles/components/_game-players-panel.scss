@@ -1,0 +1,22 @@
+.game-players-panel {
+  transition: visibility 250ms;
+  .panel {
+    transition: scale 250ms;
+    transform-origin: 50% 50%;
+  }
+
+  .black-overlay {
+    transition: opacity 250ms;
+  }
+
+  &.closed {
+    visibility: hidden;
+    .panel {
+      scale: 0;
+    }
+
+    .black-overlay {
+      opacity: 0;
+    }
+  }
+}

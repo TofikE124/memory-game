@@ -14,6 +14,7 @@ interface GameContextType {
   firstSelection: [number, number] | null;
   secondSelection: [number, number] | null;
   isSelected: (i: number, j: number) => boolean;
+  getSortedPlayers: () => Player[];
 }
 
 // Create the context
@@ -40,7 +41,6 @@ const GameContextProvider = ({
   // State Initialization
   const [grid, setGrid] = useState<Grid>([]);
   const [players, setPlayers] = useState<Player[]>([]);
-  const [totalScore, setTotalScore] = useState(0);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [firstSelection, setFirstSelection] = useState<[number, number] | null>(
     null
@@ -102,9 +102,8 @@ const GameContextProvider = ({
   // Handle a correct match
   const handleRight = () => {
     increaseCurrentPlayerScore();
-    increaseTotalScore();
     clearAllSelections();
-    if (checkGameOver()) console.log("game over");
+    if (checkGameOver()) endGame();
   };
 
   // Handle an incorrect match
@@ -127,14 +126,18 @@ const GameContextProvider = ({
     setPlayers(players);
   };
 
-  // Increase the total score
-  const increaseTotalScore = () => {
-    setTotalScore(totalScore + 1);
-  };
-
   // Check if the game is over
   const checkGameOver = () => {
-    return totalScore === (gridSize * gridSize) / 2;
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) if (!grid[i][j].flipped) return false;
+    }
+    return true;
+  };
+
+  // Handle end game
+  const endGame = () => {
+    clearAllSelections(0);
+    fireGameEndEvent(); // Fire the custom event when the game ends
   };
 
   // Check if the selected cells match
@@ -160,12 +163,23 @@ const GameContextProvider = ({
   };
 
   // Clear all selections
-  const clearAllSelections = () => {
+  const clearAllSelections = (delay: number = HIDE_DELAY) => {
     const timeOut = setTimeout(() => {
       setFirstSelection(null);
       setSecondSelection(null);
-    }, HIDE_DELAY);
+    }, delay);
     setClearAllSelectionsTimeOut(timeOut);
+  };
+
+  // Fire a custom game end event
+  const fireGameEndEvent = () => {
+    const event = new Event("gameEnd");
+    window.dispatchEvent(event);
+  };
+
+  // Get Players sorted by Score
+  const getSortedPlayers = () => {
+    return [...players].sort((a, b) => b.score - a.score);
   };
 
   return (
@@ -178,6 +192,7 @@ const GameContextProvider = ({
         firstSelection,
         secondSelection,
         isSelected,
+        getSortedPlayers,
       }}
     >
       {children}
