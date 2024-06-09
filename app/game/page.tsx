@@ -19,7 +19,7 @@ interface Props {
 
 const page = ({ searchParams: { gridSize, playersNumber, theme } }: Props) => {
   return (
-    <div className="div-container pt-16">
+    <div className="div-container py-16">
       <GameContextProvider
         gridSize={parseInt(gridSize)}
         theme={theme}

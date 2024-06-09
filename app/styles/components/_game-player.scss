@@ -4,6 +4,7 @@
 .player-metrics {
   position: relative;
   width: 200px;
+  z-index: 0;
 
   @include medium-screen() {
     width: 150px;
@@ -32,11 +33,27 @@
   }
 
   &.current {
-    background-color: $LIGHT_SALMON;
-
     .metrics-label,
     .metrics-value {
       color: $WHITE;
+    }
+  }
+
+  &.progress {
+    .up-triangle {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      width: 100%;
+      transform: translateX(-50%);
+      height: 30px;
+
+      // Gradient from left to right
+      mask: url("/triangle.svg");
+      mask-repeat: no-repeat;
+      mask-position: center;
+      transition: width 300ms;
+      z-index: 1;
     }
 
     ::before {
@@ -44,10 +61,27 @@
       position: absolute;
       top: -19px;
       left: 50%;
-      transform: translate(-50%, 0);
-      border-left: 19px solid transparent;
-      border-right: 19px solid transparent;
-      border-bottom: 19px solid $LIGHT_SALMON;
+      translate: -50% 0;
+      width: 38px;
+      height: 19px;
+      background-color: #dfe7ec;
+      mask: url("/triangle.svg");
+      mask-repeat: no-repeat;
+      mask-position: center;
+      transition: width 300ms;
+      z-index: 1;
+    }
+
+    ::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: $LIGHT_SALMON;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      width: var(--progress-width, 100%);
+      z-index: -1;
+      transition: width 300ms;
     }
   }
 }

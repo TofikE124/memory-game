@@ -4,7 +4,8 @@ import PlayerMetrics from "./GamePlayer";
 import formatTime from "@/app/utils/formatTime";
 
 const GamePlayersPanel = () => {
-  const { players, currentTurn, moves, timeLeft } = useContext(GameContext);
+  const { players, currentTurn, moves, timeLeft, currentTurnTimeLeft } =
+    useContext(GameContext);
 
   return (
     <div className="flex lg:gap-8 md:gap-3 sm:gap-6 mt-[83px] flex-wrap w-fit mx-auto">
@@ -16,6 +17,9 @@ const GamePlayersPanel = () => {
             label={player.label}
             shortLabel={player.shortLabel}
             value={player.score}
+            timeLeft={currentTurnTimeLeft}
+            fullTime={7}
+            timeProgress={index == currentTurn}
           ></PlayerMetrics>
         ))
       ) : (
@@ -23,6 +27,9 @@ const GamePlayersPanel = () => {
           <PlayerMetrics
             label="Time"
             value={formatTime(timeLeft)}
+            timeLeft={timeLeft}
+            fullTime={120}
+            timeProgress={true}
           ></PlayerMetrics>
           <PlayerMetrics label="Moves" value={moves}></PlayerMetrics>
         </div>

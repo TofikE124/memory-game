@@ -18,6 +18,7 @@ interface GameContextType {
   restartGame: () => void;
   moves: number;
   timeLeft: number;
+  currentTurnTimeLeft: number;
 }
 
 // Create the context
@@ -57,7 +58,9 @@ const GameContextProvider = ({
   const [timeLeftTimeOut, setTimeLeftTimeOut] = useState<NodeJS.Timeout | null>(
     null
   );
-
+  const [currentTurnTimeLeft, setCurrentTurnTimeLeft] = useState(7);
+  const [currentTurnTimeLeftTimeOut, setCurrentTurnTimeLeftTimeOut] =
+    useState<NodeJS.Timeout | null>(null);
   const [clearAllSelectionsTimeOut, setClearAllSelectionsTimeOut] =
     useState<NodeJS.Timeout | null>(null);
 
@@ -96,6 +99,24 @@ const GameContextProvider = ({
 
     return () => clearInterval(timer);
   }, [timeLeft]);
+
+  // Current Turn Time Intitialization
+
+  useEffect(() => {
+    if (players.length == 1) return;
+    const timer = setInterval(() => {
+      setCurrentTurnTimeLeft((prevTimeLeft) => {
+        if (prevTimeLeft <= 0.3 && players.length != 1) {
+          nextTurn();
+          return 7;
+        }
+        return prevTimeLeft - 0.1;
+      });
+    }, 100);
+    setCurrentTurnTimeLeftTimeOut(timer);
+
+    return () => clearInterval(timer);
+  }, [currentTurnTimeLeft]);
 
   // Handle Selection Change
   useEffect(() => {
@@ -175,6 +196,7 @@ const GameContextProvider = ({
   const endGame = () => {
     fireGameEndEvent(); // Fire the custom event when the game ends
     clearTimeout(timeLeftTimeOut!);
+    clearTimeout(currentTurnTimeLeftTimeOut!);
   };
 
   // Check if the selected cells match
@@ -208,6 +230,14 @@ const GameContextProvider = ({
     setClearAllSelectionsTimeOut(timeOut);
   };
 
+  // Clear First Selection
+  const clearFirstSelection = () => {
+    if (!firstSelection) return;
+    const [row, column] = firstSelection!;
+    setFlipped(row, column, false);
+    setFirstSelection(null);
+  };
+
   // Fire a custom game end event
   const fireGameEndEvent = () => {
     const event = new Event("gameEnd");
@@ -217,6 +247,11 @@ const GameContextProvider = ({
   // Get Players sorted by Score
   const getSortedPlayers = () => {
     return [...players].sort((a, b) => b.score - a.score);
+  };
+
+  const nextTurn = () => {
+    setCurrentTurn((currentTurn + 1) % playersNumber);
+    clearFirstSelection();
   };
 
   // Restart Game
@@ -233,6 +268,7 @@ const GameContextProvider = ({
     setMoves(0);
     setTimeLeftTimeOut(null);
     setTimeLeft(120);
+    setCurrentTurnTimeLeft(7);
   };
 
   return (
@@ -249,6 +285,7 @@ const GameContextProvider = ({
         restartGame,
         moves,
         timeLeft,
+        currentTurnTimeLeft,
       }}
     >
       {children}

@@ -1,25 +1,61 @@
-import { Player } from "@/app/constants/GameOptions";
-import React from "react";
+import CircleProgressBar from "@/app/components/CircleProgressBar";
+import formatTime from "@/app/utils/formatTime";
+import { useEffect, useRef } from "react";
 
 interface Props {
   current?: boolean;
   label: string;
   shortLabel?: string;
   value: string | number;
+  timeLeft?: number;
+  fullTime?: number;
+  timeProgress?: boolean;
 }
 
-const PlayerMetrics = ({ current, label, shortLabel, value }: Props) => {
+const PlayerMetrics = ({
+  current,
+  label,
+  shortLabel,
+  value,
+  timeLeft,
+  timeProgress,
+  fullTime,
+}: Props) => {
+  const playerMetricsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof timeLeft == "undefined") return;
+    const progress = (timeLeft! / fullTime!) * 100;
+    playerMetricsRef.current?.style.setProperty(
+      "--progress-width",
+      `${progress}%`
+    );
+  }, [timeLeft]);
+
   return (
     <div>
-      <div className={`player-metrics  ${current ? "current" : ""}`}>
+      <div
+        ref={playerMetricsRef}
+        className={`player-metrics  ${current ? "current" : ""} ${
+          timeProgress ? "progress" : ""
+        }`}
+      >
         <p className="metrics-label h-fit sm:hidden">{label}</p>
         <p className="metrics-label h-fit lgmd:hidden">{shortLabel || label}</p>
         <h2 className="metrics-value h2">{value}</h2>
+        <span className="up-triangle"></span>
       </div>
       {current ? (
-        <p className="text-[13px] text-dark-navy uppercase w-full text-center mt-6 sm:hidden">
-          Current Turn
-        </p>
+        <div className="w-full flex flex-col items-center justify-center">
+          <p className="text-[13px] text-dark-navy uppercase w-full text-center mt-6 sm:hidden">
+            Current Turn
+          </p>
+          {timeLeft != undefined ? (
+            <p className="text-[13px] text-light-salmon uppercase w-full text-center sm:mt-2 sm:hidden">
+              {formatTime(timeLeft)}
+            </p>
+          ) : null}
+        </div>
       ) : null}
     </div>
   );

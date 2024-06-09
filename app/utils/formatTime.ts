@@ -1,6 +1,7 @@
 const formatTime = (timeInSeconds: number) => {
-  const minutes = Math.floor(timeInSeconds / 60);
-  const seconds = timeInSeconds % 60;
+  const time = Math.ceil(timeInSeconds);
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
 
   // Format minutes and seconds
   const minutesStr =
