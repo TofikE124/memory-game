@@ -34,6 +34,9 @@ interface Props {
   children: ReactNode;
 }
 
+export const turnTime = 7;
+export const soloRoundTime = 120;
+
 const GameContextProvider = ({
   gridSize,
   theme,
@@ -54,11 +57,11 @@ const GameContextProvider = ({
     [number, number] | null
   >(null);
   const [moves, setMoves] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(soloRoundTime);
   const [timeLeftTimeOut, setTimeLeftTimeOut] = useState<NodeJS.Timeout | null>(
     null
   );
-  const [currentTurnTimeLeft, setCurrentTurnTimeLeft] = useState(7);
+  const [currentTurnTimeLeft, setCurrentTurnTimeLeft] = useState(turnTime);
   const [currentTurnTimeLeftTimeOut, setCurrentTurnTimeLeftTimeOut] =
     useState<NodeJS.Timeout | null>(null);
   const [clearAllSelectionsTimeOut, setClearAllSelectionsTimeOut] =
@@ -77,7 +80,7 @@ const GameContextProvider = ({
   }, [playersNumber]);
 
   useEffect(() => {
-    setSortedPlayers(players.sort((a, b) => b.score - a.score));
+    setSortedPlayers([...players].sort((a, b) => b.score - a.score));
   }, [players]);
 
   // Timer Intitialization
@@ -101,14 +104,13 @@ const GameContextProvider = ({
   }, [timeLeft]);
 
   // Current Turn Time Intitialization
-
   useEffect(() => {
     if (players.length == 1) return;
     const timer = setInterval(() => {
       setCurrentTurnTimeLeft((prevTimeLeft) => {
         if (prevTimeLeft <= 0.3 && players.length != 1) {
           nextTurn();
-          return 7;
+          return turnTime;
         }
         return prevTimeLeft - 0.1;
       });
@@ -116,7 +118,7 @@ const GameContextProvider = ({
     setCurrentTurnTimeLeftTimeOut(timer);
 
     return () => clearInterval(timer);
-  }, [currentTurnTimeLeft]);
+  }, [currentTurn]);
 
   // Handle Selection Change
   useEffect(() => {
@@ -169,12 +171,12 @@ const GameContextProvider = ({
     if (!firstSelection || !secondSelection) return;
     const [row1, col1] = firstSelection;
     const [row2, col2] = secondSelection;
+    clearTimeout(currentTurnTimeLeftTimeOut!);
     setTimeout(() => {
       setFlipped(row1, col1, false);
       setFlipped(row2, col2, false);
-      setFirstSelection(null);
-      setSecondSelection(null);
-      setCurrentTurn((prevTurn) => (prevTurn + 1) % playersNumber);
+      clearAllSelections(0);
+      nextTurn();
     }, HIDE_DELAY);
   };
 
@@ -251,6 +253,7 @@ const GameContextProvider = ({
 
   const nextTurn = () => {
     setCurrentTurn((currentTurn + 1) % playersNumber);
+    setCurrentTurnTimeLeft(turnTime);
     clearFirstSelection();
   };
 
@@ -267,8 +270,8 @@ const GameContextProvider = ({
     setClearAllSelectionsTimeOut(null);
     setMoves(0);
     setTimeLeftTimeOut(null);
-    setTimeLeft(120);
-    setCurrentTurnTimeLeft(7);
+    setTimeLeft(soloRoundTime);
+    setCurrentTurnTimeLeft(turnTime);
   };
 
   return (

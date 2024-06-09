@@ -24,11 +24,11 @@ export const generateGrid = (gridSize: GridSize, theme: GameTheme): Grid => {
 
     grid[row1][col1] = {
       value: randVal,
-      flipped: i < (gridSize * gridSize) / 2 - 1 ? true : false,
+      flipped: false,
     };
     grid[row2][col2] = {
       value: randVal,
-      flipped: i < (gridSize * gridSize) / 2 - 1 ? true : false,
+      flipped: false,
     };
   }
   return grid;

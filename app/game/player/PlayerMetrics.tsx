@@ -1,4 +1,3 @@
-import CircleProgressBar from "@/app/components/CircleProgressBar";
 import formatTime from "@/app/utils/formatTime";
 import { useEffect, useRef } from "react";
 
@@ -46,12 +45,12 @@ const PlayerMetrics = ({
         <span className="up-triangle"></span>
       </div>
       {current ? (
-        <div className="w-full flex flex-col items-center justify-center">
-          <p className="text-[13px] text-dark-navy uppercase w-full text-center mt-6 sm:hidden">
+        <div className="w-full flex items-center lgmd:mt-6 sm:mt-2">
+          <p className="text-[13px] text-dark-navy uppercase w-full text-center sm:hidden">
             Current Turn
           </p>
           {timeLeft != undefined ? (
-            <p className="text-[13px] text-light-salmon uppercase w-full text-center sm:mt-2 sm:hidden">
+            <p className="text-[13px] text-light-salmon uppercase w-full text-center  sm:hidden">
               {formatTime(timeLeft)}
             </p>
           ) : null}

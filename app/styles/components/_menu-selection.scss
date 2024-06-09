@@ -13,8 +13,8 @@
   cursor: pointer;
   width: fit-content;
   @include small-screen() {
-    font-size: 1rem; //16px
-    padding-inline: 2rem;
+    font-size: 0.825rem; //16px
+    padding-inline: 1.5rem;
   }
 
   @include medium-screen() {

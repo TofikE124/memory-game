@@ -1,4 +1,5 @@
 @use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
 
 .h1 {
   font-size: 3rem; //48px
@@ -43,4 +44,22 @@ body,
 
 .text-light-salmon {
   color: $LIGHT_SALMON;
+}
+
+@include small-screen() {
+  .h1 {
+    font-size: 1.5rem; //48px => 24px
+  }
+
+  .h2 {
+    font-size: 1.25rem; //32px => 20px
+  }
+
+  .h3 {
+    font-size: 1rem; //20px => 16px
+  }
+
+  body {
+    font-size: 0.8125; //18px => 13px
+  }
 }

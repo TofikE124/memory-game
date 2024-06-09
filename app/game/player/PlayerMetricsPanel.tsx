@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { GameContext } from "../GameContextProvider";
-import PlayerMetrics from "./GamePlayer";
+import { GameContext, soloRoundTime, turnTime } from "../GameContextProvider";
+import PlayerMetrics from "./PlayerMetrics";
 import formatTime from "@/app/utils/formatTime";
 
-const GamePlayersPanel = () => {
+const PlayerMetricsPanel = () => {
   const { players, currentTurn, moves, timeLeft, currentTurnTimeLeft } =
     useContext(GameContext);
 
@@ -18,7 +18,7 @@ const GamePlayersPanel = () => {
             shortLabel={player.shortLabel}
             value={player.score}
             timeLeft={currentTurnTimeLeft}
-            fullTime={7}
+            fullTime={turnTime}
             timeProgress={index == currentTurn}
           ></PlayerMetrics>
         ))
@@ -28,7 +28,7 @@ const GamePlayersPanel = () => {
             label="Time"
             value={formatTime(timeLeft)}
             timeLeft={timeLeft}
-            fullTime={120}
+            fullTime={soloRoundTime}
             timeProgress={true}
           ></PlayerMetrics>
           <PlayerMetrics label="Moves" value={moves}></PlayerMetrics>
@@ -38,4 +38,4 @@ const GamePlayersPanel = () => {
   );
 };
 
-export default GamePlayersPanel;
+export default PlayerMetricsPanel;

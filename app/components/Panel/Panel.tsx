@@ -11,7 +11,7 @@ const Panel = ({ children }: PropsWithChildren) => {
         isVisible ? "opened" : "closed"
       }`}
     >
-      <div className="panel bg-[#f2f2f2] lg:w-[655px] md:w-[600px] sm:w-[450px] px-14 pt-12 pb-[70px] rounded-[20px] text-center relative z-20">
+      <div className="panel bg-[#f2f2f2] lg:w-[655px] md:w-[600px] sm:w-[380px] px-14 pt-12 pb-[70px] rounded-[20px] text-center relative z-20">
         {children}
       </div>
       <ResultPanelOverlay closePanel={closePanel}></ResultPanelOverlay>

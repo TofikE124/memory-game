@@ -4,7 +4,7 @@ import { GameTheme } from "../constants/MenuOptions";
 import GameNumbersGrid from "./card/GameCardsGrid";
 import GameContextProvider from "./GameContextProvider";
 import GameHeader from "./header/GameHeader";
-import GamePlayersPanel from "./player/GamePlayersPanel";
+import PlayerMetricsPanel from "./player/PlayerMetricsPanel";
 import ResultPanel from "./result/ResultPanel";
 
 interface SearchParams {
@@ -19,7 +19,7 @@ interface Props {
 
 const page = ({ searchParams: { gridSize, playersNumber, theme } }: Props) => {
   return (
-    <div className="div-container py-16">
+    <div className="div-container pt-8 pb-16">
       <GameContextProvider
         gridSize={parseInt(gridSize)}
         theme={theme}
@@ -27,7 +27,7 @@ const page = ({ searchParams: { gridSize, playersNumber, theme } }: Props) => {
       >
         <GameHeader />
         <GameNumbersGrid theme={theme} gridSize={gridSize}></GameNumbersGrid>
-        <GamePlayersPanel></GamePlayersPanel>
+        <PlayerMetricsPanel></PlayerMetricsPanel>
         <ResultPanel></ResultPanel>
       </GameContextProvider>
     </div>
