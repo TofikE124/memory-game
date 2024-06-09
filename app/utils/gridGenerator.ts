@@ -5,7 +5,9 @@ import { icons } from "../constants/icons";
 export const generateGrid = (gridSize: GridSize, theme: GameTheme): Grid => {
   // Getting the avilable values depending on the theme
   const avilableValues =
-    theme == GameTheme.ICONS ? icons : getNumbersArr((gridSize * gridSize) / 2);
+    theme == GameTheme.ICONS
+      ? [...icons]
+      : getNumbersArr((gridSize * gridSize) / 2);
   shuffleArray(avilableValues);
 
   const avilableSlots = getAvilableSlotsArr(gridSize);

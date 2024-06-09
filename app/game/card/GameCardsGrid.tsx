@@ -15,7 +15,10 @@ const GameNumbersGrid = ({ gridSize, theme }: Props) => {
   const { grid, gameNumberClicked, isSelected } = useContext(GameContext);
 
   return (
-    <div className={`grid mx-auto grid-cols-4 w-fit gap-4 mt-[85px]`}>
+    <div
+      className="grid mx-auto w-fit gap-4 mt-[85px]"
+      style={{ gridTemplateColumns: `repeat(${gridSize},minmax(0,1fr))` }}
+    >
       {grid.map((row, i) =>
         row.map(({ value, flipped }, j) => (
           <GameCard

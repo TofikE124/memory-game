@@ -15,6 +15,7 @@ interface GameContextType {
   secondSelection: [number, number] | null;
   isSelected: (i: number, j: number) => boolean;
   getSortedPlayers: () => Player[];
+  restartGame: () => void;
 }
 
 // Create the context
@@ -65,14 +66,14 @@ const GameContextProvider = ({
 
   // Handle Selection Change
   useEffect(() => {
+    if (!firstSelection || !secondSelection) return;
     if (checkCorrect()) handleRight();
     else handleWrong();
-  }, [secondSelection]);
+  }, [firstSelection, secondSelection]);
 
   // Handle a number click in the grid
   const gameNumberClicked = (i: number, j: number) => {
     if (grid[i][j].flipped) return;
-
     if (firstSelection && secondSelection && checkCorrect()) {
       setSecondSelection(null);
       setFirstSelection([i, j]);
@@ -102,8 +103,10 @@ const GameContextProvider = ({
   // Handle a correct match
   const handleRight = () => {
     increaseCurrentPlayerScore();
-    clearAllSelections();
-    if (checkGameOver()) endGame();
+    if (checkGameOver()) {
+      clearAllSelections(0);
+      endGame();
+    } else clearAllSelections();
   };
 
   // Handle an incorrect match
@@ -136,7 +139,6 @@ const GameContextProvider = ({
 
   // Handle end game
   const endGame = () => {
-    clearAllSelections(0);
     fireGameEndEvent(); // Fire the custom event when the game ends
   };
 
@@ -182,6 +184,19 @@ const GameContextProvider = ({
     return [...players].sort((a, b) => b.score - a.score);
   };
 
+  // Restart Game
+  const restartGame = () => {
+    const generatedPlayers = generatePlayers(playersNumber);
+    const generatedGrid = generateGrid(gridSize, theme);
+    setPlayers(generatedPlayers);
+    setGrid(generatedGrid);
+    setCurrentTurn(0);
+    setFirstSelection(null);
+    setSecondSelection(null);
+    if (clearAllSelectionsTimeOut) clearTimeout(clearAllSelectionsTimeOut);
+    setClearAllSelectionsTimeOut(null);
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -193,6 +208,7 @@ const GameContextProvider = ({
         secondSelection,
         isSelected,
         getSortedPlayers,
+        restartGame,
       }}
     >
       {children}

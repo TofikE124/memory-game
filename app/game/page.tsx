@@ -3,7 +3,7 @@ import { Result } from "postcss";
 import { GameTheme } from "../constants/MenuOptions";
 import GameNumbersGrid from "./card/GameCardsGrid";
 import GameContextProvider from "./GameContextProvider";
-import GameHeader from "./GameHeader";
+import GameHeader from "./header/GameHeader";
 import GamePlayersPanel from "./player/GamePlayersPanel";
 import ResultPanel from "./result/ResultPanel";
 

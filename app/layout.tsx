@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Atkinson_Hyperlegible, Inter } from "next/font/google";
 import "./main.scss";
+import PanelContextProvider from "./components/Panel/PanelContextProvider";
 
 const inter = Atkinson_Hyperlegible({ subsets: ["latin"], weight: ["700"] });
 
