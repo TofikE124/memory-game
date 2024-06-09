@@ -12,6 +12,7 @@ body {
   color: $WHITE;
   border-radius: 50%;
   border: 0;
+  user-select: none;
 
   transition: transform 250ms, background-color 250ms;
 
@@ -57,7 +58,4 @@ body {
 .game-card-6x6 {
   width: 82px;
   font-size: 2.75rem; //44px
-}
-
-@include small-screen() {
 }

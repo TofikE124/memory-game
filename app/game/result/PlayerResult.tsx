@@ -1,20 +1,18 @@
-import { Player } from "@/app/constants/GameOptions";
-import React from "react";
-
 interface Props {
-  player: Player;
-  isWinner: boolean;
+  label: string;
+  value: string | number;
+  isWinner?: boolean;
 }
 
-const PlayerResult = ({ player, isWinner }: Props) => {
+const Result = ({ label, value, isWinner = false }: Props) => {
   return (
     <div className={`player-result ${isWinner ? "winner" : ""}`}>
       <p className="player-label text-nowrap">
-        {player.label} {isWinner ? " (Winner!)" : ""}
+        {label} {isWinner ? " (Winner!)" : ""}
       </p>
-      <h2 className="h2 player-score">{player.score} Pairs</h2>
+      <h2 className="h2 player-score">{value}</h2>
     </div>
   );
 };
 
-export default PlayerResult;
+export default Result;

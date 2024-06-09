@@ -1,7 +1,7 @@
 @use "../abstracts/variables" as *;
 @use "../abstracts/mixins" as *;
 
-.game-player {
+.player-metrics {
   position: relative;
   width: 200px;
 
@@ -24,18 +24,18 @@
 
   background-color: #dfe7ec;
 
-  .player-label {
+  .metrics-label {
     color: $SLATE_BLUE;
   }
-  .player-score {
+  .metrics-value {
     color: $MIDNIGHT_BLUE;
   }
 
   &.current {
     background-color: $LIGHT_SALMON;
 
-    .player-label,
-    .player-score {
+    .metrics-label,
+    .metrics-value {
       color: $WHITE;
     }
 

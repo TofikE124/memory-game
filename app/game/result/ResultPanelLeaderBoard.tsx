@@ -1,21 +1,31 @@
-import React from "react";
-import PlayerResult from "./PlayerResult";
-import { Player } from "@/app/constants/GameOptions";
+import formatTime from "@/app/utils/formatTime";
+import Result from "./PlayerResult";
+import { useContext } from "react";
+import { GameContext } from "../GameContextProvider";
 
-interface Props {
-  players: Player[];
-}
+const ResultPanelLeaderBoard = () => {
+  const { sortedPlayers, timeLeft, moves } = useContext(GameContext);
 
-const ResultPanelLeaderBoard = ({ players }: Props) => {
   return (
     <div className="flex flex-col lgmd:gap-4 sm:gap-2  mt-10">
-      {players.map((player, index) => (
-        <PlayerResult
-          key={index}
-          player={player}
-          isWinner={!index}
-        ></PlayerResult>
-      ))}
+      {sortedPlayers.length > 1 ? (
+        sortedPlayers.map((player, index) => (
+          <Result
+            key={index}
+            label={player.label}
+            value={`${player.score} Pairs`}
+            isWinner={!index}
+          ></Result>
+        ))
+      ) : (
+        <>
+          <Result label="Time Elapsed" value={formatTime(timeLeft)}></Result>
+          <Result
+            label="Moves Taken"
+            value={`${moves} Move${moves > 1 ? "s" : ""}`}
+          ></Result>
+        </>
+      )}
     </div>
   );
 };

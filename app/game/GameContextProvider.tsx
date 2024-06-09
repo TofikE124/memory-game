@@ -10,12 +10,14 @@ interface GameContextType {
   grid: Grid;
   gameNumberClicked: (i: number, j: number) => void;
   players: Player[];
+  sortedPlayers: Player[];
   currentTurn: number;
   firstSelection: [number, number] | null;
   secondSelection: [number, number] | null;
   isSelected: (i: number, j: number) => boolean;
-  getSortedPlayers: () => Player[];
   restartGame: () => void;
+  moves: number;
+  timeLeft: number;
 }
 
 // Create the context
@@ -42,6 +44,7 @@ const GameContextProvider = ({
   // State Initialization
   const [grid, setGrid] = useState<Grid>([]);
   const [players, setPlayers] = useState<Player[]>([]);
+  const [sortedPlayers, setSortedPlayers] = useState<Player[]>([]);
   const [currentTurn, setCurrentTurn] = useState(0);
   const [firstSelection, setFirstSelection] = useState<[number, number] | null>(
     null
@@ -49,6 +52,12 @@ const GameContextProvider = ({
   const [secondSelection, setSecondSelection] = useState<
     [number, number] | null
   >(null);
+  const [moves, setMoves] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeftTimeOut, setTimeLeftTimeOut] = useState<NodeJS.Timeout | null>(
+    null
+  );
+
   const [clearAllSelectionsTimeOut, setClearAllSelectionsTimeOut] =
     useState<NodeJS.Timeout | null>(null);
 
@@ -64,11 +73,36 @@ const GameContextProvider = ({
     setPlayers(generatedPlayers);
   }, [playersNumber]);
 
+  useEffect(() => {
+    setSortedPlayers(players.sort((a, b) => b.score - a.score));
+  }, [players]);
+
+  // Timer Intitialization
+  useEffect(() => {
+    if (players.length > 1) return;
+    const timer = setInterval(() => {
+      setTimeLeft((prevTimeLeft) => {
+        if (prevTimeLeft - 1 == 0 && players.length == 1) {
+          endGame();
+        }
+        if (prevTimeLeft <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prevTimeLeft - 1;
+      });
+    }, 1000);
+    setTimeLeftTimeOut(timer);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
   // Handle Selection Change
   useEffect(() => {
     if (!firstSelection || !secondSelection) return;
     if (checkCorrect()) handleRight();
     else handleWrong();
+    setMoves(moves + 1);
   }, [firstSelection, secondSelection]);
 
   // Handle a number click in the grid
@@ -140,6 +174,7 @@ const GameContextProvider = ({
   // Handle end game
   const endGame = () => {
     fireGameEndEvent(); // Fire the custom event when the game ends
+    clearTimeout(timeLeftTimeOut!);
   };
 
   // Check if the selected cells match
@@ -195,6 +230,9 @@ const GameContextProvider = ({
     setSecondSelection(null);
     if (clearAllSelectionsTimeOut) clearTimeout(clearAllSelectionsTimeOut);
     setClearAllSelectionsTimeOut(null);
+    setMoves(0);
+    setTimeLeftTimeOut(null);
+    setTimeLeft(120);
   };
 
   return (
@@ -203,12 +241,14 @@ const GameContextProvider = ({
         grid,
         gameNumberClicked,
         players,
+        sortedPlayers,
         currentTurn,
         firstSelection,
         secondSelection,
         isSelected,
-        getSortedPlayers,
         restartGame,
+        moves,
+        timeLeft,
       }}
     >
       {children}
