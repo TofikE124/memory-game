@@ -6,8 +6,9 @@ body {
 }
 
 .game-card {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   aspect-ratio: 1;
   color: $WHITE;
   border-radius: 50%;
