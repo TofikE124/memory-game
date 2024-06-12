@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Menu from "../components/Menu/Menu";
 
 const page = () => {
@@ -8,7 +8,9 @@ const page = () => {
         <h1 className="text-white text-[40px] sm:text-[32px] font-bold lg:mb-[70px] sm:mb-[34px]">
           Memory
         </h1>
-        <Menu></Menu>
+        <Suspense>
+          <Menu></Menu>
+        </Suspense>
       </div>
     </div>
   );

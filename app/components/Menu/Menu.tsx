@@ -1,9 +1,9 @@
 "use client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import MenuSection, { MenuSectionOption } from "./MenuSection";
-import { useEffect } from "react";
-import Link from "next/link";
 import { menuSections } from "@/app/constants/MenuOptions";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import MenuSection from "./MenuSection";
 
 const Menu = () => {
   const pathname = usePathname();
