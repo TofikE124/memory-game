@@ -1,10 +1,10 @@
 import { PanelContext } from "@/app/components/Panel/PanelContextProvider";
 import Link from "next/link";
 import { useContext } from "react";
-import { GameContext } from "../GameContextProvider";
+import { GameStateContext } from "../GameContextProvider";
 
 const ResultPanelButtons = () => {
-  const { restartGame } = useContext(GameContext);
+  const { restartGame } = useContext(GameStateContext);
   const { closePanel } = useContext(PanelContext);
 
   return (

@@ -1,10 +1,12 @@
 import formatTime from "@/app/utils/formatTime";
-import Result from "./PlayerResult";
 import { useContext } from "react";
-import { GameContext } from "../GameContextProvider";
+
+import Result from "./PlayerResult";
+import { PlayerContext, TimerContext } from "../GameContextProvider";
 
 const ResultPanelLeaderBoard = () => {
-  const { sortedPlayers, timeLeft, moves } = useContext(GameContext);
+  const { sortedPlayers, moves } = useContext(PlayerContext);
+  const { timeLeft } = useContext(TimerContext);
 
   return (
     <div className="flex flex-col lgmd:gap-4 sm:gap-2  mt-10">

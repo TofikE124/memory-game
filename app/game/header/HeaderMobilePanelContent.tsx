@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { GameContext } from "../GameContextProvider";
 import { PanelContext } from "@/app/components/Panel/PanelContextProvider";
 import Link from "next/link";
+import { GameStateContext } from "../GameContextProvider";
 
 const HeaderMobilePanelContent = () => {
-  const { restartGame } = useContext(GameContext);
+  const { restartGame } = useContext(GameStateContext);
   const { closePanel } = useContext(PanelContext);
   return (
     <div className="flex flex-col gap-4">

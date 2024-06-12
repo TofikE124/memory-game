@@ -1,11 +1,8 @@
-import { Suspense, useContext, useEffect, useState } from "react";
-import { Grid } from "../../constants/GameOptions";
-import { GameTheme } from "../../constants/MenuOptions";
-import { generateGrid } from "../../utils/gridGenerator";
-import GameCard from "./GameCard";
-import { GameContext } from "../GameContextProvider";
-import LoadingSkeleton from "@/app/components/LoadingSkeleton";
+import { useContext } from "react";
 import { Oval } from "react-loader-spinner";
+import { GameTheme } from "../../constants/MenuOptions";
+import GameCard from "./GameCard";
+import { GridContext } from "../GameContextProvider";
 
 interface Props {
   theme: GameTheme;
@@ -14,7 +11,7 @@ interface Props {
 }
 
 const GameNumbersGrid = ({ gridSize, theme }: Props) => {
-  const { grid, gameNumberClicked, isSelected } = useContext(GameContext);
+  const { grid, gameNumberClicked, isSelected } = useContext(GridContext);
 
   return (
     <div

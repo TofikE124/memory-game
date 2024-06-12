@@ -1,11 +1,16 @@
 import React, { useContext } from "react";
-import { GameContext, soloRoundTime, turnTime } from "../GameContextProvider";
 import PlayerMetrics from "./PlayerMetrics";
 import formatTime from "@/app/utils/formatTime";
+import {
+  PlayerContext,
+  soloRoundTime,
+  TimerContext,
+  turnTime,
+} from "../GameContextProvider";
 
 const PlayerMetricsPanel = () => {
-  const { players, currentTurn, moves, timeLeft, currentTurnTimeLeft } =
-    useContext(GameContext);
+  const { players, currentTurn, moves } = useContext(PlayerContext);
+  const { currentTurnTimeLeft, timeLeft } = useContext(TimerContext);
 
   return (
     <div className="flex lg:gap-8 md:gap-3 sm:gap-6 mt-[83px] flex-wrap w-fit mx-auto">

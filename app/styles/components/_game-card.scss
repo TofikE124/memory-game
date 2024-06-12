@@ -62,12 +62,12 @@ body {
 
 @include small-screen() {
   .game-card-4x4 {
-    width: 80px;
-    font-size: 2.5rem; //56px
+    width: 70px;
+    font-size: 2.25rem;
   }
 
   .game-card-6x6 {
     width: 50px;
-    font-size: 2rem; //44px
+    font-size: 1.75rem;
   }
 }

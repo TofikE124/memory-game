@@ -1,11 +1,12 @@
 import { PanelContext } from "@/app/components/Panel/PanelContextProvider";
 import { useContext, useEffect } from "react";
-import { GameContext } from "../GameContextProvider";
 import ResultPanelButtons from "./ResultPanelButtons";
 import ResultPanelLeaderBoard from "./ResultPanelLeaderBoard";
+import { PlayerContext, TimerContext } from "../GameContextProvider";
 
 const ResultPanelContent = () => {
-  const { sortedPlayers, timeLeft } = useContext(GameContext);
+  const { sortedPlayers } = useContext(PlayerContext);
+  const { timeLeft } = useContext(TimerContext);
   const { openPanel } = useContext(PanelContext);
 
   useEffect(() => {

@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
-import { GameContext } from "../GameContextProvider";
 import Link from "next/link";
+import { useContext } from "react";
 import HeaderMobilePanel from "./HeaderMobilePanel";
+import { GameStateContext } from "../GameContextProvider";
 
 const GameHeader = () => {
-  const { restartGame } = useContext(GameContext);
+  const { restartGame } = useContext(GameStateContext);
 
   return (
     <div className="flex items-center justify-between">

@@ -23,7 +23,7 @@ const Menu = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-[20px] p-14 w-fit">
+    <div className="bg-white rounded-[20px] p-14 w-full">
       <div className="flex flex-col gap-8">
         {menuSections.map(({ title, options, queryParamName }, index) => (
           <MenuSection
