@@ -4,6 +4,8 @@ import { Grid, Player } from "../constants/GameOptions";
 import { GameTheme } from "../constants/MenuOptions";
 import { generateGrid } from "../utils/gridGenerator";
 import { generatePlayers } from "../utils/playersGenerator";
+import soundService from "../services/SoundService";
+import { sounds } from "../constants/sounds";
 
 // Define the context type
 interface GameContextType {
@@ -122,6 +124,9 @@ const GameContextProvider = ({
 
   // Handle Selection Change
   useEffect(() => {
+    if ((firstSelection || secondSelection) && !checkCorrect())
+      soundService.play(sounds["Card Flip"]);
+
     if (!firstSelection || !secondSelection) return;
     if (checkCorrect()) handleRight();
     else handleWrong();
@@ -159,6 +164,7 @@ const GameContextProvider = ({
 
   // Handle a correct match
   const handleRight = () => {
+    soundService.play(sounds.Correct);
     increaseCurrentPlayerScore();
     if (checkGameOver()) {
       clearAllSelections(0);
