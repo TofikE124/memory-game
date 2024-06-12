@@ -102,6 +102,7 @@ const GameContextProvider = ({
       soundService.play(sounds["Card Flip"]);
 
     if (!firstSelection || !secondSelection) return;
+    setMoves(moves + 1);
     if (checkCorrect()) handleRight();
     else handleWrong();
   }, [firstSelection, secondSelection]);
@@ -225,13 +226,6 @@ const GameContextProvider = ({
     setClearAllSelectionsTimeOut(timeOut);
   };
 
-  const clearFirstSelection = () => {
-    if (!firstSelection) return;
-    const [row, column] = firstSelection!;
-    setFlipped(row, column, false);
-    setFirstSelection(null);
-  };
-
   const restartPlayers = () => {
     const generatedPlayers = generatePlayers(playersNumber);
     setPlayers(generatedPlayers);
@@ -249,8 +243,6 @@ const GameContextProvider = ({
   };
 
   const restartTimer = () => {
-    clearInterval(timeLeftTimeOut!);
-    clearInterval(currentTurnTimeLeftTimeOut!);
     setTimeLeft(soloRoundTime);
     setCurrentTurnTimeLeft(turnTime);
   };
@@ -269,7 +261,6 @@ const GameContextProvider = ({
   const increaseCurrentPlayerScore = () => {
     players[currentTurn].score++;
     setPlayers([...players]);
-    setMoves(moves + 1);
   };
 
   // Restart game

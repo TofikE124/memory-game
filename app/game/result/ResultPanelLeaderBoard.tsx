@@ -2,7 +2,11 @@ import formatTime from "@/app/utils/formatTime";
 import { useContext } from "react";
 
 import Result from "./PlayerResult";
-import { PlayerContext, TimerContext } from "../GameContextProvider";
+import {
+  PlayerContext,
+  soloRoundTime,
+  TimerContext,
+} from "../GameContextProvider";
 
 const ResultPanelLeaderBoard = () => {
   const { sortedPlayers, moves } = useContext(PlayerContext);
@@ -21,7 +25,10 @@ const ResultPanelLeaderBoard = () => {
         ))
       ) : (
         <>
-          <Result label="Time Elapsed" value={formatTime(timeLeft)}></Result>
+          <Result
+            label="Time Elapsed"
+            value={formatTime(soloRoundTime - timeLeft)}
+          ></Result>
           <Result
             label="Moves Taken"
             value={`${moves} Move${moves > 1 ? "s" : ""}`}
