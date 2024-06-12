@@ -172,6 +172,7 @@ const GameContextProvider = ({
   const handleRight = () => {
     soundService.play(sounds.Correct);
     increaseCurrentPlayerScore();
+    setCurrentTurnTimeLeft(turnTime);
     if (checkGameOver()) {
       clearAllSelections(0);
       endGame();
@@ -182,6 +183,7 @@ const GameContextProvider = ({
     if (!firstSelection || !secondSelection) return;
     const [row1, col1] = firstSelection;
     const [row2, col2] = secondSelection;
+    clearTimeout(currentTurnTimeLeftTimeOut!);
     setTimeout(() => {
       setFlipped(row1, col1, false);
       setFlipped(row2, col2, false);
@@ -256,6 +258,7 @@ const GameContextProvider = ({
 
   const nextTurn = () => {
     setCurrentTurn((currentTurn + 1) % playersNumber);
+    setCurrentTurnTimeLeft(turnTime);
   };
 
   const increaseCurrentPlayerScore = () => {
