@@ -18,7 +18,7 @@ interface Props {
   searchParams: SearchParams;
 }
 
-const page = ({
+const Page = ({
   searchParams: { gridSize, playersNumber, theme, difficulty },
 }: Props) => {
   useValidateSearchParams({ gridSize, playersNumber, theme, difficulty });
@@ -43,4 +43,4 @@ const page = ({
   );
 };
 
-export default page;
+export default Page;
