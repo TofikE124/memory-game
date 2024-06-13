@@ -1,5 +1,8 @@
 // Enums representing game settings
 
+import formatTime from "../utils/formatTime";
+import { QueryParams } from "./queryParams";
+
 // Themes available for the game
 export enum GameTheme {
   NUMBERS = "Numbers",
@@ -38,6 +41,7 @@ export interface GameProps {
 export interface MenuSectionOption {
   label: string;
   value: string | number;
+  extraDetails?: (params: URLSearchParams) => string | number;
 }
 
 // Interface representing a section in the menu
@@ -56,7 +60,7 @@ export const menuSections: MenuSectionType[] = [
       { label: "Numbers", value: GameTheme.NUMBERS },
       { label: "Icons", value: GameTheme.ICONS },
     ],
-    queryParamName: "theme",
+    queryParamName: QueryParams.THEME,
     visible: true,
   },
   {
@@ -68,18 +72,33 @@ export const menuSections: MenuSectionType[] = [
       { label: "4", value: PlayersNumber._4 },
     ],
     visible: true,
-    queryParamName: "playersNumber",
+    queryParamName: QueryParams.PLAYERS_NUMBER,
   },
   {
     title: "Difficulty",
     options: [
-      { label: "Easy", value: Difficulty.EASY },
-      { label: "Medium", value: Difficulty.MEDIUM },
-      { label: "Hard", value: Difficulty.HARD },
+      {
+        label: "Easy",
+        value: Difficulty.EASY,
+        extraDetails: (params) =>
+          getDifficultyExtraDetails(params, Difficulty.EASY),
+      },
+      {
+        label: "Medium",
+        value: Difficulty.MEDIUM,
+        extraDetails: (params) =>
+          getDifficultyExtraDetails(params, Difficulty.MEDIUM),
+      },
+      {
+        label: "Hard",
+        value: Difficulty.HARD,
+        extraDetails: (params) =>
+          getDifficultyExtraDetails(params, Difficulty.HARD),
+      },
     ],
-    queryParamName: "difficulty",
+    queryParamName: QueryParams.DIFFICULTY,
     visible: (params: URLSearchParams) =>
-      Number(params.get("playersNumber")) === PlayersNumber._1,
+      Number(params.get(QueryParams.PLAYERS_NUMBER)) === PlayersNumber._1,
   },
   {
     title: "Grid Size",
@@ -88,7 +107,7 @@ export const menuSections: MenuSectionType[] = [
       { label: "6x6", value: GridSize._6X6 },
     ],
     visible: true,
-    queryParamName: "gridSize",
+    queryParamName: QueryParams.GRID_SIZE,
   },
 ];
 
@@ -112,3 +131,14 @@ export const roundTimeMap: Record<GridSize, RoundTimeType> = {
     [Difficulty.HARD]: 60,
   },
 };
+
+function getDifficultyExtraDetails(
+  params: URLSearchParams,
+  difficulty: Difficulty
+) {
+  const gridSize = parseInt(
+    params.get(QueryParams.GRID_SIZE) || ""
+  ) as GridSize;
+
+  return formatTime(roundTimeMap[gridSize][difficulty]);
+}

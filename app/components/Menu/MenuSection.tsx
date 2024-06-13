@@ -44,6 +44,7 @@ const MenuSection = ({ title, options, queryParamName, visible }: Props) => {
               updateQueryParam(queryParamName, option.value.toString());
             }}
             active={searchParams.get(queryParamName) == option.value.toString()}
+            extraDetails={option.extraDetails?.call(this, searchParams)}
             key={index}
           >
             {option.label}

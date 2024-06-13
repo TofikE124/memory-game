@@ -7,6 +7,7 @@ import {
   GridSize,
   PlayersNumber,
 } from "../constants/MenuOptions"; // Adjust import paths accordingly
+import { QueryParams } from "../constants/queryParams"; // Import the query params enum
 
 interface SearchParams {
   theme: GameTheme;
@@ -53,10 +54,13 @@ const useValidateSearchParams = ({
       );
 
       const urlSearchParams = new URLSearchParams(searchParams);
-      urlSearchParams.set("theme", newTheme);
-      urlSearchParams.set("playersNumber", newPlayersNumber.toString());
-      urlSearchParams.set("gridSize", newGridSize.toString());
-      urlSearchParams.set("difficulty", newDifficulty.toString());
+      urlSearchParams.set(QueryParams.THEME, newTheme);
+      urlSearchParams.set(
+        QueryParams.PLAYERS_NUMBER,
+        newPlayersNumber.toString()
+      );
+      urlSearchParams.set(QueryParams.GRID_SIZE, newGridSize.toString());
+      urlSearchParams.set(QueryParams.DIFFICULTY, newDifficulty.toString());
 
       const newUrl = `${pathname}?${urlSearchParams.toString()}`;
       if (newUrl !== `${pathname}?${searchParams.toString()}`) {
