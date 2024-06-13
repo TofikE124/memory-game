@@ -55,11 +55,7 @@ const useValidateSearchParams = ({
     urlSearchParams.set("playersNumber", newPlayersNumber.toString());
     urlSearchParams.set("gridSize", newGridSize.toString());
     urlSearchParams.set("difficulty", newDifficulty.toString());
-    router.push(
-      `${
-        process.env.NEXT_PUBLIC_BASE_URL
-      }/${pathname}?${urlSearchParams.toString()}`
-    );
+    router.push(`${pathname}?${urlSearchParams.toString()}`);
   }, [gridSize, playersNumber, theme, router]);
 };
 
