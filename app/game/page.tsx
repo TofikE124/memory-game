@@ -21,7 +21,14 @@ interface Props {
 const Page = ({
   searchParams: { gridSize, playersNumber, theme, difficulty },
 }: Props) => {
-  useValidateSearchParams({ gridSize, playersNumber, theme, difficulty });
+  const isRedirecting = useValidateSearchParams({
+    gridSize,
+    playersNumber,
+    theme,
+    difficulty,
+  });
+
+  if (isRedirecting) return <></>;
 
   return (
     <div className="div-container pt-8 pb-16">

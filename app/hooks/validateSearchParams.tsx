@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Difficulty,
   GameTheme,
@@ -24,39 +24,61 @@ const useValidateSearchParams = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const [isRedirecting, setIsRedirecting] = useState(true);
 
   useEffect(() => {
-    let newGridSize = validateParam<GridSize>(
-      parseInt(gridSize),
-      Object.values(GridSize) as GridSize[],
-      GridSize._4X4
-    );
+    const validateAndRedirect = () => {
+      let newGridSize = validateParam<GridSize>(
+        parseInt(gridSize),
+        Object.values(GridSize) as GridSize[],
+        GridSize._4X4
+      );
 
-    let newPlayersNumber = validateParam(
-      parseInt(playersNumber),
-      Object.values(PlayersNumber) as PlayersNumber[],
-      PlayersNumber._3
-    );
+      let newPlayersNumber = validateParam(
+        parseInt(playersNumber),
+        Object.values(PlayersNumber) as PlayersNumber[],
+        PlayersNumber._3
+      );
 
-    let newTheme = validateParam(
-      theme,
-      Object.values(GameTheme),
-      GameTheme.NUMBERS
-    );
+      let newTheme = validateParam(
+        theme,
+        Object.values(GameTheme),
+        GameTheme.NUMBERS
+      );
 
-    let newDifficulty = validateParam(
-      difficulty,
-      Object.values(Difficulty),
-      Difficulty.EASY
-    );
+      let newDifficulty = validateParam(
+        difficulty,
+        Object.values(Difficulty),
+        Difficulty.EASY
+      );
 
-    const urlSearchParams = new URLSearchParams(searchParams);
-    urlSearchParams.set("theme", newTheme);
-    urlSearchParams.set("playersNumber", newPlayersNumber.toString());
-    urlSearchParams.set("gridSize", newGridSize.toString());
-    urlSearchParams.set("difficulty", newDifficulty.toString());
-    router.push(`${pathname}?${urlSearchParams.toString()}`);
-  }, [gridSize, playersNumber, theme, router]);
+      const urlSearchParams = new URLSearchParams(searchParams);
+      urlSearchParams.set("theme", newTheme);
+      urlSearchParams.set("playersNumber", newPlayersNumber.toString());
+      urlSearchParams.set("gridSize", newGridSize.toString());
+      urlSearchParams.set("difficulty", newDifficulty.toString());
+
+      const newUrl = `${pathname}?${urlSearchParams.toString()}`;
+      if (newUrl !== `${pathname}?${searchParams.toString()}`) {
+        setIsRedirecting(true);
+        router.push(newUrl);
+      } else {
+        setIsRedirecting(false);
+      }
+    };
+
+    validateAndRedirect();
+  }, [
+    gridSize,
+    playersNumber,
+    theme,
+    difficulty,
+    router,
+    searchParams,
+    pathname,
+  ]);
+
+  return isRedirecting;
 };
 
 function validateParam<T extends { toString: () => string }>(
