@@ -19,7 +19,7 @@ const GameNumbersGrid = ({ gridSize, theme }: Props) => {
 
   return (
     <div
-      className="grid mx-auto w-fit gap-4 mt-[50px]"
+      className="grid mx-auto gap-4 w-fit mt-[50px]"
       style={{ gridTemplateColumns: `repeat(${gridSize},minmax(0,1fr))` }}
     >
       {!grid.length ? (
