@@ -1,22 +1,27 @@
 "use client";
+import { MenuSectionOption } from "@/app/constants/MenuOptions";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import MenuSelection from "./MenuSelection";
-
-export interface MenuSectionOption {
-  label: string;
-  value: string | number;
-}
 
 interface Props {
   title: string;
   options: MenuSectionOption[];
   queryParamName: string;
+  visible?: boolean | ((params: URLSearchParams) => boolean);
 }
 
-const MenuSection = ({ title, options, queryParamName }: Props) => {
+const MenuSection = ({ title, options, queryParamName, visible }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+
+  // Check visibility condition
+  if (
+    visible === false ||
+    (typeof visible === "function" && !visible(searchParams))
+  ) {
+    return null;
+  }
 
   const updateQueryParam = (param: string, value: string | null) => {
     const params = new URLSearchParams(searchParams);
