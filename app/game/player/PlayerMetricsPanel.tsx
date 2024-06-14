@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext } from "react";
 import PlayerMetrics from "./PlayerMetrics";
 import formatTime from "@/app/utils/formatTime";

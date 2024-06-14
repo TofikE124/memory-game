@@ -1,3 +1,4 @@
+"use client";
 import { PanelContext } from "@/app/components/Panel/PanelContextProvider";
 import { useContext, useEffect } from "react";
 import ResultPanelButtons from "./ResultPanelButtons";

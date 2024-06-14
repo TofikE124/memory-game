@@ -1,11 +1,6 @@
-"use client";
+import { Metadata } from "next";
 import { Difficulty, GameTheme } from "../constants/MenuOptions";
-import useValidateSearchParams from "../hooks/validateSearchParams";
-import GameNumbersGrid from "./card/GameCardsGrid";
-import GameContextProvider from "./GameContextProvider";
-import GameHeader from "./header/GameHeader";
-import PlayerMetricsPanel from "./player/PlayerMetricsPanel";
-import ResultPanel from "./result/ResultPanel";
+import PageContent from "./PageContent";
 
 interface SearchParams {
   theme: GameTheme;
@@ -21,33 +16,23 @@ interface Props {
 const Page = ({
   searchParams: { gridSize, playersNumber, theme, difficulty },
 }: Props) => {
-  const isRedirecting = useValidateSearchParams({
-    gridSize,
-    playersNumber,
-    theme,
-    difficulty,
-  });
-
-  if (isRedirecting) return <></>;
-
   return (
-    <div className="div-container pt-8 pb-16">
-      <GameContextProvider
-        gridSize={parseInt(gridSize)}
-        theme={theme}
-        playersNumber={parseInt(playersNumber)}
-        difficulty={difficulty}
-      >
-        <GameHeader />
-        <GameNumbersGrid
-          theme={theme}
-          gridSize={parseInt(gridSize)}
-        ></GameNumbersGrid>
-        <PlayerMetricsPanel></PlayerMetricsPanel>
-        <ResultPanel></ResultPanel>
-      </GameContextProvider>
-    </div>
+    <PageContent
+      difficulty={difficulty}
+      gridSize={gridSize}
+      theme={theme}
+      playersNumber={playersNumber}
+    ></PageContent>
   );
 };
+
+export async function generateMetadata({
+  searchParams: { gridSize },
+}: Props): Promise<Metadata> {
+  return {
+    title: `Game of ${gridSize}x${gridSize}`,
+    description: `Memory Game with ${gridSize}x${gridSize} grid`,
+  };
+}
 
 export default Page;

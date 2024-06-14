@@ -1,3 +1,4 @@
+"use client";
 import formatTime from "@/app/utils/formatTime";
 import { useEffect, useRef } from "react";
 

@@ -1,5 +1,17 @@
 import React, { Suspense } from "react";
 import Menu from "../components/Menu/Menu";
+import { Metadata } from "next";
+import { GameTheme, Difficulty } from "../constants/MenuOptions";
+interface SearchParams {
+  theme: GameTheme;
+  playersNumber: "1" | "2" | "3" | "4";
+  gridSize: "4" | "6";
+  difficulty: Difficulty;
+}
+
+interface Props {
+  searchParams: SearchParams;
+}
 
 const page = () => {
   return (
@@ -15,5 +27,14 @@ const page = () => {
     </div>
   );
 };
+
+export async function generateMetadata({
+  searchParams: { gridSize, difficulty, playersNumber, theme },
+}: Props): Promise<Metadata> {
+  return {
+    title: "Menu",
+    description: "Menu",
+  };
+}
 
 export default page;

@@ -1,3 +1,4 @@
+"use client";
 import ResultPanelOverlay from "@/app/game/result/ResultPanelOverlay";
 import { PropsWithChildren, useContext } from "react";
 import { PanelContext } from "./PanelContextProvider";
