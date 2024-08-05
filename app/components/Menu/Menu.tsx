@@ -32,26 +32,28 @@ const Menu = () => {
   }, [pathname, router, searchParams]);
 
   return (
-    <div className="bg-white rounded-[20px] p-14 w-full">
-      <div className="flex flex-col gap-8">
-        {menuSections.map(
-          ({ title, options, queryParamName, visible }, index) => (
-            <MenuSection
-              title={title}
-              options={options}
-              queryParamName={queryParamName}
-              visible={visible}
-              key={index}
-            />
-          )
-        )}
+    <div className="pb-[40px]">
+      <div className="bg-white rounded-[20px] lgmd:p-14 sm:p-8 w-full">
+        <div className="flex flex-col gap-8">
+          {menuSections.map(
+            ({ title, options, queryParamName, visible }, index) => (
+              <MenuSection
+                title={title}
+                options={options}
+                queryParamName={queryParamName}
+                visible={visible}
+                key={index}
+              />
+            )
+          )}
 
-        <Link
-          className="menu-button-big text-center no-underline"
-          href={`/game?${searchParams.toString()}`}
-        >
-          Start Game
-        </Link>
+          <Link
+            className="menu-button-big text-center no-underline"
+            href={`/game?${searchParams.toString()}`}
+          >
+            Start Game
+          </Link>
+        </div>
       </div>
     </div>
   );

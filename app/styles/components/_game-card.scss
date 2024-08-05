@@ -7,8 +7,6 @@ body {
 
 .game-card {
   display: flex;
-  align-items: center;
-  justify-content: center;
   aspect-ratio: 1;
   color: $WHITE;
   border-radius: 50%;
@@ -18,6 +16,11 @@ body {
   transition: transform 250ms, background-color 250ms;
 
   .game-card-content {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
     transform: rotateY(180deg);
     opacity: 0;
   }

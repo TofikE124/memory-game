@@ -15,9 +15,9 @@ interface Props {
 
 const page = () => {
   return (
-    <div className="bg-dark-navy w-screen min-h-screen flex justify-center lg:py-[100px] md:py-[75px] sm:py-[40px] lgmd:px-10">
+    <div className="bg-dark-navy w-screen min-h-screen overflow-y-auto flex justify-center lg:pt-[30px] md:pt-[75px] sm:py-[40px]">
       <div className="flex flex-col items-center sm:w-full sm:max-w-[90vw]">
-        <h1 className="text-white text-[40px] sm:text-[32px] font-bold lg:mb-[70px] sm:mb-[34px]">
+        <h1 className="text-white text-[40px] sm:text-[32px] font-bold lg:mb-[70px] md:mb-[50px] sm:mb-[34px]">
           Memory
         </h1>
         <Suspense>
